@@ -1,0 +1,22 @@
+{
+  "name": "portfoliouno",
+  "version": "1.0.0",
+  "description": "My blog, resume, projects, experiments",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jssuttles/PortfolioUno.git"
+  },
+  "keywords": [
+    "portfolio"
+  ],
+  "author": "Jason Suttles",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jssuttles/PortfolioUno/issues"
+  },
+  "homepage": "https://github.com/jssuttles/PortfolioUno#readme"
+}
