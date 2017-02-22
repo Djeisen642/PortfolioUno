@@ -5,17 +5,20 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import { resolve } from 'path';
 import { getIfUtils, removeEmpty } from 'webpack-config-utils';
+var pkg = require('../package.json');
 
 const srcFolder = './src';
 const destFolder = './dist';
-const dllManifest = require('portfolio_uno/vendor.json');
+var dllConfig = resolve(pkg.dllPath, 'vendor.json');
+console.log(dllConfig);
+const dllManifest = require(dllConfig);
 
 export default env => {
   const { ifProd, ifNotProd } = getIfUtils(env);
   return {
     cache: ifProd(),
     entry: [
-      resolve(srcFolder, 'app.jsx')
+      resolve(srcFolder, 'index.js')
     ],
     watch: ifNotProd(),
     devtool: ifProd('source-map', 'inline-sourcemap'),
@@ -106,7 +109,7 @@ export default env => {
         manifest: dllManifest
       }),
       new CopyWebpackPlugin([{
-        context: resolve('node_modules', 'portfolio_uno'),
+        context: pkg.dllPath,
         from: '**/*',
         to: 'vendor',
         copyUnmodified: true
