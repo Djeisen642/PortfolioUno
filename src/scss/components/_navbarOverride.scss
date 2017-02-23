@@ -1,0 +1,8 @@
+.navbar-inverse {
+  border-bottom: 3px solid $line_red;
+}
+
+.puNavItem {
+  padding-top: 24px;
+  @extend h2;
+}

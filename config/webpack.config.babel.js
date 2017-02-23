@@ -17,9 +17,7 @@ export default env => {
   const { ifProd, ifNotProd } = getIfUtils(env);
   return {
     cache: ifProd(),
-    entry: [
-      resolve(srcFolder, 'index.js')
-    ],
+    entry: resolve(srcFolder, 'index.js'),
     watch: ifNotProd(),
     devtool: ifProd('source-map', 'inline-sourcemap'),
     output: {
@@ -118,6 +116,7 @@ export default env => {
         filename: '[name]-[hash].css',
         allChunks: true
       }),
+      ifNotProd(new webpack.HotModuleReplacementPlugin()),
       ifProd(new webpack.LoaderOptionsPlugin({
         minimize: true,
         debug: true
@@ -135,6 +134,12 @@ export default env => {
         },
         sourceMap: true
       }))
-    ])
+    ]),
+    devServer: {
+      hot: true,
+      compress: true,
+      contentBase: destFolder,
+      port: 3000
+    }
   };
 };
