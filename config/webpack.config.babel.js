@@ -104,7 +104,11 @@ export default env => {
     resolve: {
       alias: {
         vue: 'vue/dist/vue.esm.js'
-      }
+      },
+      modules: [
+        resolve('./src'),
+        resolve('./node_modules')
+      ]
     },
     plugins: removeEmpty([
       new HtmlWebpackPlugin({

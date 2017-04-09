@@ -1,22 +1,24 @@
 import uikitless from 'uikit/src/less/uikit.less';
 import uikittheme from 'uikit/src/less/uikit.theme.less';
 import css from './less/main.less';
-var zionUrl = require('./images/Zion.jpg');
+import uikit from 'uikit';
 
 import Vue from 'vue';
-import uikit from 'uikit';
-import navbar from './components/navbar.vue';
 import VueRouter from 'vue-router';
-import HomePage from './components/homepage.vue';
-import Blog from './components/blog.vue';
-import Projects from './components/projects.vue';
-import Resume from './components/resume.vue';
-import Contact from './components/contact.vue';
-import NotFoundPage from './components/404.vue';
+import App from 'app.vue';
+import Navbar from 'components/navbar.vue';
+import HomePage from 'components/homepage.vue';
+import Blog from 'components/blog.vue';
+import Projects from 'components/projects.vue';
+import Resume from 'components/resume.vue';
+import Contact from 'components/contact.vue';
+import NotFoundPage from 'components/404.vue';
+
+Vue.use(VueRouter);
 
 // var navbar
-Vue.component('navbar', navbar);
-Vue.use(VueRouter);
+Vue.component('navbar', Navbar);
+Vue.component('app', App);
 
 const routes = [
   { path: '/', component: HomePage },
@@ -32,8 +34,5 @@ const router = new VueRouter({
 });
 
 new Vue({
-  data: {
-    zionUrl
-  },
   router
 }).$mount('#app');

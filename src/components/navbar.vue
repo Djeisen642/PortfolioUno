@@ -1,5 +1,5 @@
 <template>
-<div class="uk-navbar-container">
+<div class="uk-navbar-container" v-cloak>
   <nav class="uk-navbar">
     <div class="uk-navbar-left">
       <router-link to="/" class="uk-logo uk-navbar-item">PortfolioUno</router-link>
