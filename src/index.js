@@ -1,27 +1,39 @@
-require('./scss/main.scss');
-import React from 'react';
-import { render } from 'react-dom';
-// import { createStore } from 'redux';
-// import { Provider } from 'react-redux';
-import App from './components/App.js';
-import BlogPage from './components/BlogPage.js';
-import ProjectsPage from './components/ProjectsPage.js';
-import ResumePage from './components/ResumePage.js';
-import ContactPage from './components/ContactPage.js';
-import { Router, Route, hashHistory } from 'react-router'
-// import reducer from './reducers';
+import uikitless from 'uikit/src/less/uikit.less';
+import uikittheme from 'uikit/src/less/uikit.theme.less';
+import css from './less/main.less';
+var zionUrl = require('./images/Zion.jpg');
 
-// const store = createStore(reducer);
+import Vue from 'vue';
+import uikit from 'uikit';
+import navbar from './components/navbar.vue';
+import VueRouter from 'vue-router';
+import HomePage from './components/homepage.vue';
+import Blog from './components/blog.vue';
+import Projects from './components/projects.vue';
+import Resume from './components/resume.vue';
+import Contact from './components/contact.vue';
+import NotFoundPage from './components/404.vue';
 
-render(
-  <Router history={hashHistory}>
-    <Route path="/" component={App}>
-      <Route path="/home" component={App}/>
-      <Route path="/blog" component={BlogPage}/>
-      <Route path="/projects" component={ProjectsPage}/>
-      <Route path="/resume" component={ResumePage}/>
-      <Route path="/contact" component={ContactPage}/>
-    </Route>
-  </Router>,
-  document.getElementById('app')
-);
+// var navbar
+Vue.component('navbar', navbar);
+Vue.use(VueRouter);
+
+const routes = [
+  { path: '/', component: HomePage },
+  { path: '/blog', component: Blog },
+  { path: '/projects', component: Projects },
+  { path: '/resume', component: Resume },
+  { path: '/contact', component: Contact },
+  { path: '*', component: NotFoundPage }
+];
+
+const router = new VueRouter({
+  routes
+});
+
+new Vue({
+  data: {
+    zionUrl
+  },
+  router
+}).$mount('#app');

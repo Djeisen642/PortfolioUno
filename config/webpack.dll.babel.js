@@ -1,22 +1,17 @@
 import webpack from 'webpack';
 import { resolve } from 'path';
+import { getIfUtils } from 'webpack-config-utils';
 var pkg = require('../package.json');
 
-export default() => {
+export default(env) => {
+  const { ifProd } = getIfUtils(env);
   return {
     entry: {
       vendor: [
-        'react',
-        'react-dom',
-        'react-router',
-        'react-router-redux',
-        'react-bootstrap',
-        'react-router-bootstrap',
-        'redux',
-        'redux-thunk',
-        'axios',
+        'jquery',
         'moment',
-        'classnames'
+        'vue',
+        'uikit'
       ]
     },
     output: {
@@ -25,6 +20,11 @@ export default() => {
       library: '[name]'
     },
     plugins: [
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: ifProd('"production"', '"development"')
+        }
+      }),
       new webpack.DllPlugin({
         name: '[name]',
         path: resolve(pkg.dllPath, '[name].json')

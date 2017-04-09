@@ -1,0 +1,41 @@
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.17em; }
+h4 { font-size: 1.12em; }
+h5 { font-size: .83em; }
+h6 { font-size: .75em; }
+
+.logo {
+  font-family: 'Arvo', serif !important;
+  font-weight: 500;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.link {
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.animated-underline {
+    position: relative;
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 15px;
+      right: ~"calc(102% - 15px)";
+      bottom: 25px;
+      height: 1px;
+      background-color: currentColor;
+      transition: .3s ease-in-out;
+      transition-property: right;
+    }
+    &:hover:before {
+      right: 15px;
+    }
+  }
+}

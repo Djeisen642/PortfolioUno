@@ -28,16 +28,20 @@ export default env => {
     module: {
       rules: removeEmpty([
         {
-          test: /\.jsx?$/,
+          test: /\.vue$/,
+          loader: 'vue-loader'
+        },
+        {
+          test: /\.js$/,
           exclude: /(node_modules|bower_components)/,
           loader: 'babel-loader',
           query: {
-            presets: ['react', 'es2015', 'stage-0'],
-            plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties']
+            presets: ['es2015', 'stage-0'],
+            plugins: ['transform-decorators-legacy', 'transform-class-properties']
           }
         },
         ifProd({
-          test: /\.scss$/,
+          test: /\.less$/,
           loader: ExtractTextPlugin.extract({
             loader: [{
               loader: 'css-loader'
@@ -49,13 +53,13 @@ export default env => {
                 }
               }
             }, {
-              loader: 'sass-loader',
+              loader: 'less-loader'
             }],
             // use style-loader in development
             fallback: 'style-loader'
           })
         }, {
-          test: /\.scss$/,
+          test: /\.less$/,
           use: [{
             loader: 'style-loader'
           }, {
@@ -72,19 +76,18 @@ export default env => {
               }
             }
           }, {
-            loader: 'sass-loader',
+            loader: 'less-loader',
             options: {
               sourceMap: true
             }
           }]
         }),
         {
-          test: /\.(png|svg|jpg|gif)$/,
+          test: /\.(jpg|png|svg)$/,
           loader: 'url-loader',
           include: [resolve(srcFolder, 'images')],
           options: {
-            name: './assets/images/[name]-[hash].[ext]',
-            limit: 100000
+            limit: 25000
           }
         },
         {
@@ -97,6 +100,11 @@ export default env => {
           }
         }
       ])
+    },
+    resolve: {
+      alias: {
+        vue: 'vue/dist/vue.esm.js'
+      }
     },
     plugins: removeEmpty([
       new HtmlWebpackPlugin({
