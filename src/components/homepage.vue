@@ -1,6 +1,6 @@
 <template>
-  <div v-cloak>
-    <img :src="zionUrl" alt="Zion National Park">
+  <div>
+    <img :src="zionUrl" alt="Zion National Park" class="half-page-image">
     <div>Hello</div>
   </div>
 </template>
@@ -12,6 +12,9 @@
       return {
         zionUrl
       }
+    },
+    created: function() {
+      this.$store.commit('changeTransparentBGNavbar', true);
     }
-  }
+  };
 </script>

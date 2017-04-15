@@ -3,6 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import autoprefixer from 'autoprefixer';
+import NpmImportPlugin from 'less-plugin-npm-import';
 import { resolve } from 'path';
 import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 var pkg = require('../package.json');
