@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "dllPath": "./dll",
   "scripts": {
-    "start": "node server",
+    "start": "babel-node --inspect server --presets es2015,stage-0",
     "clean": "rimraf dist",
     "test": "mocha test",
     "build:vendor": "better-npm-run build:vendor",

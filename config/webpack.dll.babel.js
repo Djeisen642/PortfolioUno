@@ -1,7 +1,7 @@
 import webpack from 'webpack';
 import { resolve } from 'path';
 import { getIfUtils } from 'webpack-config-utils';
-var pkg = require('../package.json');
+import pkg from '../package.json';
 
 export default(env) => {
   const { ifProd } = getIfUtils(env);
@@ -16,7 +16,7 @@ export default(env) => {
     },
     output: {
       filename: '[name].dll.js',
-      path: pkg.dllPath,
+      path: resolve(pkg.dllPath),
       library: '[name]'
     },
     plugins: [
