@@ -1,13 +1,11 @@
 import mongoose from 'mongoose';
 import fs from 'fs-extra';
 import { basename, extname } from 'path';
-import configs from '../config/config';
-
-const config = configs[process.env.ENV_SHORT];
 
 let db;
+
 try {
-  db = mongoose.connect(`mongodb://${config.user}:${config.pass}@localhost/${config.db}?authSource=admin`);
+  db = mongoose.connect(process.env.MONGO_DB_URI);
 } catch (e) {
   console.log('Error: Could not connect to database.');
   throw e;

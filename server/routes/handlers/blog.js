@@ -1,6 +1,9 @@
 import eHandler from '../../utils/error';
 import models from '../../models';
 
+// function postBlog(req, res) {
+// }
+
 function blog(req, res) {
   models.BlogPost.find({})
   .then((blogPosts) => {
