@@ -24,18 +24,15 @@ const User = new Schema({
     lowercase: true,
     required: true,
     unique: true,
+    trim: true,
     match: constants.EMAIL_REGEX
   },
   phoneNumber: String,
   privilege: {
-    type: String,
-    enum: [
-      constants.PRIVILEGES.OWNER.NAME,
-      constants.PRIVILEGES.EDITOR.NAME,
-      constants.PRIVILEGES.WRITER.NAME,
-      constants.PRIVILEGES.CONSULTANT.NAME
-    ],
-    default: constants.PRIVILEGES.WRITER.NAME
+    type: NUMBER,
+    min: constants.MIN_PRIVILEGE_ENUM,
+    max: constants.MAX_PRIVILEGE_ENUM,
+    default: constants.PRIVILEGES.WRITER.ENUM
   },
   deactivated: Date
 });

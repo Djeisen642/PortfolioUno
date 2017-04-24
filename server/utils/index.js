@@ -28,8 +28,30 @@ function setEnvVars() {
   process.env.MONGO_DB_URI = `mongodb://${config.user}:${config.pass}@localhost/${config.db}?authSource=admin`;
 }
 
-function hasPrivilegeLevel(minPrivilegeLevel, req, res, next) {
+function _hasPrivilegeLevel(minPrivilegeLevelEnum, req) {
+  const userPrivilegeEnum = req.user.privilege;
+  if (minPrivilegeLevelEnum === userPrivilegeEnum) {
+    return true;
+  }
+  for (const privilege in constants.PRIVILEGES) {
+    if (constants.PRIVILEGES.hasOwnProperty(privilege)) {
+      const privilegeLevelObject = constants.PRIVILEGES[privilege];
+      if (privilegeLevelObject.ENUM === userPrivilegeEnum) {
+        if (privilegeLevelObject.CONTAINS.includes(minPrivilegeLevelEnum)) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
 
+function hasPrivilegeLevel(minPrivilegeLevel, req, res, next) {
+  if (_hasPrivilegeLevel(minPrivilegeLevel, req)) {
+    next();
+  } else {
+    eHandler.jsonError(res, 'User does not have access.');
+  }
 }
 
 function _isLoggedIn(req) {
@@ -42,11 +64,12 @@ function isLoggedIn(req, res, next) {
   } else {
     eHandler.jsonError(res, 'User is not logged in.');
   }
-};
+}
 
 export default {
   setEnvVars,
   _isLoggedIn,
   isLoggedIn,
+  _hasPrivilegeLevel,
   hasPrivilegeLevel
 };

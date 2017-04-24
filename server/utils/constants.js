@@ -1,4 +1,4 @@
-export default {
+const constants = {
   ENV_SHORT_ENUM: {
     DEV: 'dev',
     TEST: 'test',
@@ -7,19 +7,44 @@ export default {
   EMAIL_REGEX: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   PRIVILEGES: {
     OWNER: {
-      NAME: 'Owner',
-      CONTAINS: ['EDITOR', 'WRITER']
+      ENUM: 1,
+      NAME: 'Owner'
     },
     EDITOR: {
-      NAME: 'Editor',
-      CONTAINS: ['WRITER']
+      ENUM: 2,
+      NAME: 'Editor'
     },
     WRITER: {
+      ENUM: 3,
       NAME: 'Writer'
     },
     CONSULTANT: {
-      NAME: 'Consultant',
-      CONTAINS: ['WRITER']
+      ENUM: 4,
+      NAME: 'Consultant'
     }
   }
 };
+
+constants.PRIVILEGES.OWNER.CONTAINS = [
+  constants.PRIVILEGES.EDITOR.ENUM,
+  constants.PRIVILEGES.WRITER.ENUM
+];
+constants.PRIVILEGES.EDITOR.CONTAINS = [
+  constants.PRIVILEGES.WRITER.ENUM
+];
+constants.PRIVILEGES.CONSULTANT.CONTAINS = [
+  constants.PRIVILEGES.WRITER.ENUM
+];
+
+let maxPrivilegeEnum = 0;
+
+for (let privilege in constants.PRIVILEGES) {
+  if (constants.PRIVILEGES.hasOwnProperty(privilege)) {
+    maxPrivilegeEnum = Math.max(constants.PRIVILEGES.ENUM, maxPrivilegeEnum);
+  }
+}
+
+constants.MIN_PRIVILEGE_ENUM = 1;
+constants.MAX_PRIVILEGE_ENUM = maxPrivilegeEnum;
+
+export default constants;
