@@ -38,7 +38,7 @@ constants.PRIVILEGES.CONSULTANT.CONTAINS = [
 
 let maxPrivilegeEnum = 0;
 
-for (let privilege in constants.PRIVILEGES) {
+for (const privilege in constants.PRIVILEGES) {
   if (constants.PRIVILEGES.hasOwnProperty(privilege)) {
     maxPrivilegeEnum = Math.max(constants.PRIVILEGES.ENUM, maxPrivilegeEnum);
   }

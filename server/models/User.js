@@ -29,7 +29,7 @@ const User = new Schema({
   },
   phoneNumber: String,
   privilege: {
-    type: NUMBER,
+    type: Number,
     min: constants.MIN_PRIVILEGE_ENUM,
     max: constants.MAX_PRIVILEGE_ENUM,
     default: constants.PRIVILEGES.WRITER.ENUM
