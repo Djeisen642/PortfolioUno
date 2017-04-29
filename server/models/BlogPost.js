@@ -3,7 +3,11 @@ import BlogComment from './BlogComment';
 const ObjectId = Schema.Types.ObjectId;
 
 var BlogPost = new Schema({
-  title: String,
+  title: {
+    type: String,
+    maxlength: 100,
+    required: true
+  },
   subTitle: String,
   author: {
     type: ObjectId,
@@ -19,7 +23,10 @@ var BlogPost = new Schema({
     type: ObjectId,
     ref: 'User'
   }],
-  body: String,
+  body: {
+    type: String,
+    required: true
+  },
   hidden: Boolean
 });
 

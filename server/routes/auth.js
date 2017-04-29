@@ -1,19 +1,22 @@
 import express from 'express';
 import handlers from './handlers/auth';
 import utils from '../utils';
-import constants from '../utils/constants';
+// import constants from '../utils/constants';
+import privileges from '../utils/privilege';
 
 const router = express.Router();
 
-router.get(
+router.post(
   '/registerUser',
   utils.isLoggedIn,
-  utils.hasPrivilegeLevel.bind(null, constants.PRIVILEGES.EDITOR.ENUM),
+  utils.hasPrivilege.bind(null, privileges.EDITOR),
   handlers.registerUser
 );
 
-router.get('/login', handlers.login);
-router.get('/logout', utils.isLoggedIn, handlers.logout);
-router.get('/auth', handlers.auth);
+router.post('/login', handlers.login);
+
+router.post('/logout', utils.isLoggedIn, handlers.logout);
+
+router.get('/', handlers.auth);
 
 module.exports = router;

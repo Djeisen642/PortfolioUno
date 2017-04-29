@@ -28,26 +28,12 @@ function setEnvVars() {
   process.env.MONGO_DB_URI = `mongodb://${config.user}:${config.pass}@localhost/${config.db}?authSource=admin`;
 }
 
-function _hasPrivilegeLevel(minPrivilegeLevelEnum, req) {
-  const userPrivilegeEnum = req.user.privilege;
-  if (minPrivilegeLevelEnum === userPrivilegeEnum) {
-    return true;
-  }
-  for (const privilege in constants.PRIVILEGES) {
-    if (constants.PRIVILEGES.hasOwnProperty(privilege)) {
-      const privilegeLevelObject = constants.PRIVILEGES[privilege];
-      if (privilegeLevelObject.ENUM === userPrivilegeEnum) {
-        if (privilegeLevelObject.CONTAINS.includes(minPrivilegeLevelEnum)) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
+function _hasPrivilege(minPrivilegeEnum, req) {
+  return req.user.hasPrivilege(minPrivilegeEnum);
 }
 
-function hasPrivilegeLevel(minPrivilegeLevel, req, res, next) {
-  if (_hasPrivilegeLevel(minPrivilegeLevel, req)) {
+function hasPrivilege(minPrivilegeEnum, req, res, next) {
+  if (_hasPrivilege(minPrivilegeEnum, req)) {
     next();
   } else {
     eHandler.jsonError(res, 'User does not have access.');
@@ -70,6 +56,6 @@ export default {
   setEnvVars,
   _isLoggedIn,
   isLoggedIn,
-  _hasPrivilegeLevel,
-  hasPrivilegeLevel
+  _hasPrivilege,
+  hasPrivilege
 };
