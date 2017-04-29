@@ -4,10 +4,12 @@ import MongoDBSession from 'connect-mongodb-session';
 import path from 'path';
 import favicon from 'serve-favicon';
 import serveStatic from 'serve-static';
+import bodyParser from 'body-parser';
+
 import utils from './utils';
 import eHandlers from './utils/error';
 
-const MongoDBStore = MongoDBSession(express);
+const MongoDBStore = MongoDBSession(session);
 
 utils.setEnvVars();
 
@@ -23,13 +25,20 @@ var sess = {
   secret: 'PortfolioUnoSecret',
   store,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {}
 };
 
 if (process.env.IS_PRODUCTION) {
   app.set('trust proxy', 1); // trust first proxy
   sess.cookie.secure = true; // serve secure cookies
 }
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 app.use(session(sess));
 

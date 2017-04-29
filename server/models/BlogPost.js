@@ -18,10 +18,12 @@ var BlogPost = new Schema({
     default: Date.now
   },
   comments: [BlogComment],
-  dateEdited: [Date],
-  editor: [{
-    type: ObjectId,
-    ref: 'User'
+  edited: [{
+    dateEdited: Date,
+    editor: {
+      type: ObjectId,
+      ref: 'User'
+    }
   }],
   body: {
     type: String,

@@ -27,6 +27,9 @@ fs.readdirSync(__dirname)
     return !exclude.includes(filename);
   }).forEach((filename) => {
     models[filename] = mongoose.model(filename, require(`./${filename}`));
+    if (models[filename].postInitialization) {
+      models[filename].postInitialization();
+    }
   });
 
 models.db = db;

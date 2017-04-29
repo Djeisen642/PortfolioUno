@@ -27,6 +27,37 @@ function newBlogPost(req, res) {
   });
 }
 
+function editBlogPost(req, res) {
+  const blogId = req.params.blogId;
+  const title = req.body.title;
+  const subTitle = req.body.subTitle;
+  const body = req.body.body;
+
+  models.BlogPost.find({ _id: blogId })
+  .then((blog) => {
+    if (title) {
+      blog.title = title;
+    }
+    if (subTitle) {
+      blog.subTitle = subTitle;
+    }
+    if (body) {
+      blog.body = body;
+    }
+
+    blog.edited.push({
+      dateEdited: new Date(),
+      editor: req.user
+    });
+
+    return blog.save();
+  }).then(() => {
+    return res.json({ success: 'Blog post edited' });
+  }).catch((err) => {
+    return eHandler.jsonError(res, err);
+  });
+}
+
 function blog(req, res) {
   models.BlogPost.find({})
   .then((blogPosts) => {
@@ -41,5 +72,6 @@ function blog(req, res) {
 
 export default {
   newBlogPost,
+  editBlogPost,
   blog
 };

@@ -70,9 +70,10 @@ User.plugin(passportLocalMongoose, {
   usernameLowerCase: true
 });
 
-passport.use(User.createStrategy());
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+User.postInitialization = function() {
+  passport.use(User.createStrategy());
+  passport.serializeUser(User.serializeUser());
+  passport.deserializeUser(User.deserializeUser());
+};
 
 export default User;
